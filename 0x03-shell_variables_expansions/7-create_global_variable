@@ -1,2 +1,3 @@
 #!/bin/bash
-alais Best="School"
+
+export BEST="School"
