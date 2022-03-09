@@ -1,2 +1,2 @@
 #!/bin/bash
-alais ls al=PATH
+echo $PATH | tr -s ':' '\n' | wc -l
