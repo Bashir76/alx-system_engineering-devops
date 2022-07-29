@@ -1,12 +1,3 @@
-<<<<<<< HEAD
 #!/bin/bash
 ls
 
-=======
-#!/bin/bash 
-<<<<<<< HEAD
-pwd 
->>>>>>> 8a32b45a40343dd9076dd117a04ea02716dac986
-=======
-ls
->>>>>>> 8bfb07d134412846a4a9317422a0ab37f39de1a4
