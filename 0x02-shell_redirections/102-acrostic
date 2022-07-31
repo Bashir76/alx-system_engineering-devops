@@ -1,1 +1,2 @@
-Bashir I like coding 
+#!/bin/bash
+cut -c 1 | paste -s -d ''
