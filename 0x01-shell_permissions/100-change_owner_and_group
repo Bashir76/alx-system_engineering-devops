@@ -1,1 +1,1 @@
-chown vincent chgrp staff
+chown vincent:staff *
