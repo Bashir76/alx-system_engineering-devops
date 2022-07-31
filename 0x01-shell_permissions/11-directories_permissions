@@ -1,1 +1,2 @@
-777
+#!/bin/bash
+chmod +X *
