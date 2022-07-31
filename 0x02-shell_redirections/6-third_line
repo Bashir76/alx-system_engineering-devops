@@ -1,2 +1,2 @@
 #!/bin/bash
-iacta
+head -n 1 iacta | nail -n 1
