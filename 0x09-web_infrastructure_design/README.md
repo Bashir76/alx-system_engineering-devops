@@ -1,7 +1,8 @@
 #  0x09-web_infrastructure_design.
  
-This Directory project is a team project.
-And the authors of this project are.
+A team project.
+
+## Authors
 
 * [Aishat Adebayo](https://github.com/)
 * [Bryan Somtochukwu](https://github.com/bryansomto)
