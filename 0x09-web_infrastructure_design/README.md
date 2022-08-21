@@ -3,6 +3,6 @@
 This Directory project is a team project.
 And the authors of this project are.
 
-- Bashir AmirKano
 - Aishat Adebayo
-- Bryan 
+* [Bryan Somtochukwu](https://github.com/bryansomto)
+* [Bashir AmirKano](https://github.com/bashir76)
