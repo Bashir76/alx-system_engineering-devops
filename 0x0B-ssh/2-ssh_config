@@ -1,4 +1,8 @@
 # School server config options
 Host 3.83.32.200
     IdentityFile ~/.ssh/school
-    Protocol 2
+    HashKnownHosts yes
+    GSSAPIAuthentication yes
+    GSSAPIDelegateCredentials no
+    IdentityFile ~/.ssh/school
+    PasswordAuthentication no 
