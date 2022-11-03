@@ -1,5 +1,7 @@
 #!/usr/bin/python3
-"""Contains the count_words function"""
+"""
+   Contains the count_words function
+"""
 import requests
 
 
@@ -39,4 +41,4 @@ def count_words(subreddit, word_list, found_list=[], after=None):
                                      reverse=True):
                 print('{}: {}'.format(key, value))
     else:
-        return
+        return = count_words(sys.argv[1], [x for x in sys.argv[2].split()])
