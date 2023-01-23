@@ -1,4 +1,4 @@
-onfigures Nginx to serve the complete AirBnB_clone_v4 application.
+# Configures Nginx to serve the complete AirBnB_clone_v4 application.
 
 server {
     # Listen on port 80.
@@ -6,7 +6,7 @@ server {
     listen      [::]:80 default_server ipv6only=on;
 
     # Use server IP as domain name
-    server_name 18.233.65.144;
+    server_name 104.196.168.90;
 
     # Customize HTTP response header
     add_header  X-Served-By 375-web-01;
@@ -43,4 +43,3 @@ server {
         internal;
     }
 }
-
