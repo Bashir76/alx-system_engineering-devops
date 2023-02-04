@@ -1,9 +1,10 @@
 #!/usr/bin/env bash
-# a script that installs nginx, configures index.html, and other edits
-sudo apt update -y && sudo apt install -y nginx
-echo "Holberton School" > /var/www/html/index.html
-echo "Ceci n'est pas une page" > /var/www/html/custom_404.html
-newtext="rewrite ^/redirect_me https://www.youtube.com/watch?v=jyknCVczn3Q permanent;"
-sed -i "/listen 80 default_server/a $newtext" /etc/nginx/sites-available/default
-sed -i '/listen 80 default_server/a error_page 404 /custom_404.html; location = /custom_404.html {root /var/www/html;\n internal;}' /etc/nginx/sites-available/default
-service nginx start
+# Script that installs Nginx server, redirects /redirect_me and customizes 404 not found
+
+sudo apt-get -y update
+sudo apt-get -y install nginx
+sudo ufw allow 'Nginx HTTP'
+echo "Ceci n'est pas une page" | sudo tee /usr/share/nginx/html/404.html
+newlines="\\\terror_page 404 /404.html;\n\tlocation = /404.html {\n\t\troot /usr/share/nginx/html;\n\t\tinternal;\n\t}"
+sudo sed -i "27i $newlines" /etc/nginx/sites-available/default
+sudo service nginx restart
