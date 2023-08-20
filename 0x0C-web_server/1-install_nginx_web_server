@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
-# a script that installs nginx and configures index.html
-sudo apt-get install -y nginx &&
-    sudo mkdir -p /var/www/html/ &&
-    echo "Hello World!" | tee /var/www/html/index.html &&
-    service nginx start
+# installs and configures a nginx server
+apt-get install nginx -y;
+service nginx start;
+chmod 666 /usr/share/nginx/html/index.html;
+echo -e 'Hello World!' > /usr/share/nginx/html/index.html;
+service nginx reloa
+d
