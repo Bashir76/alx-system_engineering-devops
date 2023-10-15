@@ -1,8 +1,31 @@
 #!/usr/bin/env bash
-# installs and configures a nginx server
-apt-get install nginx -y;
-service nginx start;
-chmod 666 /usr/share/nginx/html/index.html;
-echo -e 'Hello World!' > /usr/share/nginx/html/index.html;
-service nginx reloa
-d
+# This script installs Nginx and configures it to return "Hello World!" on a GET request to the root.
+
+# Update the package list to ensure we have the latest information
+sudo apt-get update -y
+
+# Install Nginx
+sudo apt-get install nginx -y
+
+# Create a basic HTML file with "Hello World!"
+echo "<!DOCTYPE html><html><body>Hello World!</body></html>" | sudo tee /var/www/html/index.html
+
+# Check if Nginx is running and start it if necessary
+if ! ps aux | grep -q "[n]ginx"; then
+	    sudo service nginx start
+	    fi
+	    
+	    # Ensure Nginx is configured to listen on port 80
+	    sudo sed -i 's/80 default_server;/80;/' /etc/nginx/sites-available/default
+	    
+	    # Reload Nginx to apply the changes
+	    sudo service nginx reload
+	    
+	    # Check if Nginx serves "Hello World!" on port 80 using curl
+	    if curl -s localhost | grep -q "Hello World!"; then
+		        echo "Nginx is serving 'Hello World!' on port 80."
+			else
+				    echo "Nginx configuration might not be correct. Please check."
+				    fi
+				    
+				    d
