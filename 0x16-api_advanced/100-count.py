@@ -28,7 +28,7 @@ def count_words(subreddit, word_list, found_list=[], after=None):
                 if word in word_list:
                     found_list.append(word)
         if aft is not None:
-            count_words(subreddit, word_list, found_list, aft)
+            return count_words(subreddit, word_list, found_list, aft)
         else:
             result = {}
             for word in found_list:
