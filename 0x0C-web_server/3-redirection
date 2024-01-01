@@ -1,40 +1,51 @@
 #!/usr/bin/env bash
-# This script configures Nginx to perform a 301 Moved Permanently redirect from /redirect_me to a specified URL.
+# This script configures Nginx to redirect /redirect_me to another page with a "301 Moved Permanently"
 
 # Ensure Nginx is installed
-if ! dpkg -l | grep -q "nginx"; then
-    sudo apt-get update -y
-    sudo apt-get install nginx -y
+if ! command -v nginx &> /dev/null
+then
+	    # Install Nginx if not installed
+	        sudo apt-get update
+		    sudo apt-get install -y nginx
 fi
 
-# Define the source and destination locations for the redirect
-source_location="/etc/nginx/sites-available/default"
-destination_location="/etc/nginx/sites-available/redirect_me"
+# Configure Nginx for redirection
+sudo echo "
+server {
+    listen 80 default_server;
+        listen [::]:80 default_server;
 
-# Create a new Nginx configuration file for the redirect
-echo "server {
-    listen 80;
-    listen [::]:80;
+	    root /var/www/html;
+	        index index.html index.htm;
 
-    server_name _;
+		    server_name _;
 
-    location /redirect_me {
-        return 301 https://www.youtube.com/watch?v=QH2-TGUlwu4;
-    }
+		        location /redirect_me {
+			        return 301 https://www.youtube.com/watch?v=QH2-TGUlwu4;
+				    }
 
-    # ... any other server configuration ...
+			        location / {
+				        try_files \$uri \$uri/ =404;
+					    }
+			    }" | sudo tee /etc/nginx/sites-available/default > /dev/null
 
-}" | sudo tee $destination_location > /dev/null
+		    # Restart Nginx without using systemctl
+		    sudo kill -HUP $(cat /var/run/nginx.pid)
 
-# Create a symbolic link to enable the new site configuration
-sudo ln -s $destination_location /etc/nginx/sites-enabled/
+		    # Check if Nginx is running
+		    if pgrep -x "nginx" >/dev/null
+		    then
+			        echo "Nginx is running."
+			else
+				    echo "Error: Nginx is not running."
+				        exit 1
+		    fi
 
-# Remove the default symbolic link, if it exists
-if [ -L /etc/nginx/sites-enabled/default ]; then
-    sudo rm /etc/nginx/sites-enabled/default
-fi
+		    # Test redirection with curl
+		    response=$(curl -sI http://127.0.0.1/redirect_me/)
+		    if [[ $response == *"301 Moved Permanently"* ]]; then
+			        echo "Nginx redirection is configured successfully."
+			else
+				    echo "Error: Nginx redirection configuration failed."
+		    fi
 
-# Reload Nginx to apply the changes
-sudo service nginx reload
-
-echo "Nginx has been configured to perform a 301 Moved Permanently redirect from /redirect_me to https://www.youtube.com/watch?v=QH2-TGUlwu4."
