@@ -27,7 +27,7 @@ server {
 EOL
 
 # Restart Nginx without using systemctl
-sudo kill -HUP $(cat /var/run/nginx.pid)
+sudo kill -HUP "$(cat /var/run/nginx.pid)"
 
 # Check if Nginx is running
 if pgrep -x "nginx" >/dev/null
