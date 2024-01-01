@@ -10,42 +10,43 @@ then
 fi
 
 # Configure Nginx for redirection
-sudo echo "
+sudo tee /etc/nginx/sites-available/default > /dev/null <<EOL
 server {
     listen 80 default_server;
-        listen [::]:80 default_server;
+    listen [::]:80 default_server;
 
-	    root /var/www/html;
-	        index index.html index.htm;
+    root /var/www/html;
+    index index.html index.htm;
 
-		    server_name _;
+    server_name _;
 
-		        location /redirect_me {
-			        return 301 https://www.youtube.com/watch?v=QH2-TGUlwu4;
-				    }
+    location /redirect_me {
+        return 301 https://www.youtube.com/watch?v=QH2-TGUlwu4;
+    }
 
-			        location / {
-				        try_files \$uri \$uri/ =404;
-					    }
-			    }" | sudo tee /etc/nginx/sites-available/default > /dev/null
+    location / {
+        try_files \$uri \$uri/ =404;
+    }
+}
+EOL
 
-		    # Restart Nginx without using systemctl
-		    sudo kill -HUP $(cat /var/run/nginx.pid)
+# Restart Nginx without using systemctl
+sudo kill -HUP $(cat /var/run/nginx.pid)
 
-		    # Check if Nginx is running
-		    if pgrep -x "nginx" >/dev/null
-		    then
-			        echo "Nginx is running."
-			else
-				    echo "Error: Nginx is not running."
-				        exit 1
-		    fi
+# Check if Nginx is running
+if pgrep -x "nginx" >/dev/null
+then
+	    echo "Nginx is running."
+    else
+	        echo "Error: Nginx is not running."
+		    exit 1
+fi
 
-		    # Test redirection with curl
-		    response=$(curl -sI http://127.0.0.1/redirect_me/)
-		    if [[ $response == *"301 Moved Permanently"* ]]; then
-			        echo "Nginx redirection is configured successfully."
-			else
-				    echo "Error: Nginx redirection configuration failed."
-		    fi
+# Test redirection with curl
+response=$(curl -sI http://127.0.0.1/redirect_me/)
+if [[ $response == *"301 Moved Permanently"* ]]; then
+	    echo "Nginx redirection is configured successfully."
+    else
+	        echo "Error: Nginx redirection configuration failed."
+fi
 
