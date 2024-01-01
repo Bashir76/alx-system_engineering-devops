@@ -37,3 +37,11 @@ else
     echo "Error: Nginx is not running."
     exit 1
 fi
+
+# Test redirection with curl
+response=$(curl -sI http://127.0.0.1/redirect_me/)
+if [[ $response == *"301 Moved Permanently"* ]]; then
+    echo "Nginx redirection is configured successfully."
+else
+    echo "Error: Nginx redirection configuration failed."
+fi
